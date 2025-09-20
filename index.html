@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday, Manav!</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;700&display=swap');
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: transparent;
+      animation: fadeOut ease-out forwards;
+    }
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+        transform: translateY(0) rotate(0);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(200px) rotate(360deg);
+      }
+    }
+    .pacifico-font {
+      font-family: 'Pacifico', cursive;
+    }
+    .inter-font {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center p-4 overflow-hidden inter-font relative">
+
+  <!-- Confetti -->
+  <div id="confetti-container" class="absolute top-0 left-0 w-full h-full pointer-events-none z-0"></div>
+
+  <!-- Card -->
+  <div class="w-full max-w-4xl bg-gray-800 rounded-3xl shadow-2xl p-6 sm:p-8 md:p-12 text-center relative z-10 border border-purple-500">
+    
+    <h1 class="text-3xl sm:text-4xl md:text-6xl font-bold pacifico-font text-purple-400 mb-4 animate-pulse">
+      Happy Birthday!
+    </h1>
+
+    <p id="brother-name" class="text-xl sm:text-2xl md:text-3xl font-semibold text-pink-400 mb-6"></p>
+
+    <img
+      src="./IMG_20230323_203447.jpg"
+      alt="Photo of your brother"
+      class="rounded-xl shadow-lg w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto mb-8 border-4 border-purple-500 transform transition-transform duration-500 hover:scale-105"
+    />
+
+    <p class="text-base sm:text-lg md:text-xl leading-relaxed mb-6 px-2">
+      Wishing you a day filled with joy, laughter, and everything you've ever wanted.
+    </p>
+    
+    <p class="text-base sm:text-lg md:text-xl font-bold text-yellow-300">
+      Hope your special day is as incredible as you are!
+    </p>
+
+    <!-- Music button -->
+    <button onclick="toggleMusic()" class="mt-6 bg-purple-600 hover:bg-purple-700 px-4 sm:px-6 py-2 sm:py-3 rounded-xl shadow-lg text-sm sm:text-base">
+      🎵 Play / Pause Song
+    </button>
+
+    <!-- Birthday Song -->
+    <audio id="bgMusic" autoplay loop>
+      <source src="./song.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50">
+    <div class="bg-gray-900 text-white rounded-2xl shadow-xl p-6 sm:p-8 max-w-xs sm:max-w-sm md:max-w-md w-full text-center border-4 border-green-500 relative transform scale-100 transition-transform duration-300 ease-in-out">
+      <h2 class="text-2xl sm:text-3xl font-bold pacifico-font text-green-400 mb-4">🎉 A Special Birthday Wish! 🎉</h2>
+      <p id="birthday-message" class="text-sm sm:text-base md:text-lg mb-6"></p>
+      <button onclick="closeModal()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-lg transition-colors duration-300 text-sm sm:text-base">
+        Close
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Brother's name
+    const brotherName = "MANAV"; 
+    document.getElementById("brother-name").textContent = brotherName;
+
+    // Surprise messages
+    const messages = [
+      "🎂 Wishing you endless happiness and success this year!",
+      "🎉 May your birthday be filled with love, laughter, and unforgettable moments!",
+      "✨ You’re not just my brother, you’re my best friend. Happy Birthday!",
+      "🥳 Cheers to you on your special day—let’s make it unforgettable!",
+      "🌟 Another amazing year awaits you. Shine bright, always!"
+    ];
+
+    // Launch confetti
+    function launchConfetti() {
+      const confettiContainer = document.getElementById('confetti-container');
+      const colors = ['#fde047', '#be185d', '#8b5cf6', '#10b981', '#fb7185', '#38bdf8'];
+      for (let i = 0; i < 25; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = `${Math.random() * 100}vw`;
+        confetti.style.top = `-20px`;
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDuration = `${Math.random() * 2 + 1}s`;
+        confettiContainer.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 3000); // cleanup
+      }
+    }
+
+    // Show modal with random message
+    window.onload = function() {
+      setTimeout(() => {
+        document.getElementById('modal').classList.remove('hidden');
+        document.getElementById('birthday-message').textContent =
+          messages[Math.floor(Math.random() * messages.length)];
+      }, 1000); 
+
+      // Continuous confetti
+      setInterval(launchConfetti, 2000);
+    };
+
+    function closeModal() {
+      document.getElementById('modal').classList.add('hidden');
+    }
+
+    // Music toggle
+    function toggleMusic() {
+      const music = document.getElementById("bgMusic");
+      if (music.paused) {
+        music.play();
+      } else {
+        music.pause();
+      }
+    }
+  </script>
+</body>
+</html>
